@@ -70,18 +70,14 @@ modalBtn.addEventListener('click', () => {
 })
 
 const ITEMS = [
-    { key: 'tornilleria', label: 'Revisión de Tornillería' },
-    { key: 'pines', label: 'Revisión Pines' },
-    { key: 'pasadores', label: 'Revisión Pasadores' },
-    { key: 'bujes', label: 'Revisión Bujes' },
-    { key: 'carcaza', label: 'Revisión Carcaza' },
-    { key: 'swiche', label: 'Revisión Swiche Encendido y accionamiento' },
-    { key: 'guarda', label: 'Revisión Guarda' },
-    { key: 'tuerca_contratuerca', label: 'Revisión Tuerca, Contratuerca' },
-    { key: 'limpieza', label: 'Revisión Limpieza' },
-    { key: 'lubricacion', label: 'Revisión Lubricación' },
-    { key: 'cable_enchufe', label: 'Revisión Cable y Enchufe' },
-    { key: 'mango', label: 'Revisión Mango' }
+  { key: 'tornilleria',         label: 'Revisión de Tornillería' },
+  { key: 'bateria',             label: 'Estado de la batería' },
+  { key: 'carcaza',             label: 'Revisión Carcaza' },
+  { key: 'swiche',              label: 'Revisión Swiche Encendido y accionamiento' },
+  { key: 'guarda',              label: 'Revisión Guarda' },
+  { key: 'tuerca_contratuerca', label: 'Revisión Tuerca, Contratuerca' },
+  { key: 'limpieza',            label: 'Revisión Limpieza' },
+  { key: 'mango',               label: 'Revisión Mango' }
 ]
 
 // --- Generar los ítems en el HTML ---
