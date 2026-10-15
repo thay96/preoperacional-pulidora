@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preoperacional Pulidora · CONEQUIPOS</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <header class="header">
+            <img src="/imag/conequipos.png" alt="CONEQUIPOS" class="logo">
+            <h1>PREOPERACIONAL PULIDORA</h1>
+            <div class="codes">
+                <span><b>CÓDIGO:</b> SG-SST-F-99</span>
+                <span><b>VERSIÓN:</b> 1</span>
+                <span><b>FECHA:</b> 04/07/2023</span>
+            </div>
+        </header>
+
+        <form id="preopForm" novalidate>
+
+            <section class="card">
+                <h2>1. Datos Generales</h2>
+                <div class="grid-2">
+                    <label>Obra <input type="text" name="obra" required placeholder="Nombre de la obra"></label>
+                    <label>Ubicación <input type="text" name="ubicacion" required placeholder="Ciudad / sitio"></label>
+                    <label>Fecha desde <input type="date" name="fecha_desde" required></label>
+                    <label>Fecha hasta <input type="date" name="fecha_hasta" required></label>
+                </div>
+            </section>
+            <section class="card">
+                <h2>2. Verificación Diaria del Equipo</h2>
+                <p class="hint">Marca <b>B</b> (Bueno), <b>M</b> (Malo) o <b>N/A</b> (No Aplica) para cada ítem.</p>
+                <div id="itemsList" class="items-list"></div>
+            </section>
+
+            <section class="card">
+                <h2>3. Observaciones</h2>
+                <textarea name="observaciones" rows="3" placeholder="Observaciones del día (opcional)"></textarea>
+            </section>
+
+            <section class="card">
+                <h2>4. Foto del Equipo / Trabajador</h2>
+                <p class="hint-bold">Toma una foto de la pulidora</p>
+
+                <div class="photo-zone" id="photoZone">
+                    <input type="file" id="photoInput" accept="image/*" capture="user" hidden>
+                    <button type="button" class="photo-btn" id="photoBtn">
+                        Tomar / Elegir Foto
+                    </button>
+                    <div class="photo-preview hidden" id="photoPreview">
+                        <img id="photoImg" alt="Vista previa">
+                        <button type="button" class="photo-remove" id="photoRemove" title="Quitar foto">✕</button>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="card">
+                <h2>5. Firma del Trabajador</h2>
+                <div class="grid-2">
+                    <label>Cédula
+                        <input type="text" name="cedula" required placeholder="Solo números" inputmode="numeric"
+                            pattern="[0-9]+" maxlength="15">
+                    </label>
+                    <label>Nombre completo
+                        <input type="text" name="firma" required placeholder="Solo letras"
+                            pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" maxlength="80">
+                    </label>
+                </div>
+            </section>
+
+            <div class="note">
+                <b>NOTA:</b> SI LA SELECCIÓN NO CUMPLE, NO SE PUEDE OPERAR EL EQUIPO.
+            </div>
+
+            <button type="submit" class="btn-submit" id="btnSubmit">Enviar Registro</button>
+        </form>
+    </div>
+
+
+    <!-- Modal profesional -->
+    <div id="modalOverlay" class="modal-overlay hidden">
+        <div class="modal-box">
+            <div class="modal-icon" id="modalIcon">✓</div>
+            <h3 id="modalTitle">Registro enviado</h3>
+            <p id="modalMessage">El formulario fue guardado correctamente.</p>
+            <button id="modalBtn" class="modal-btn">Aceptar</button>
+        </div>
+    </div>
+    
+    <iframe name="iframeOculto" style="display:none;"></iframe>
+    <script type="module" src="/app.js"></script>
+</body>
+
+</html>
