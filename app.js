@@ -70,14 +70,14 @@ modalBtn.addEventListener('click', () => {
 })
 
 const ITEMS = [
-  { key: 'tornilleria',         label: 'Revisión de Tornillería' },
-  { key: 'bateria',             label: 'Estado de la batería' },
-  { key: 'carcaza',             label: 'Revisión Carcaza' },
-  { key: 'swiche',              label: 'Revisión Swiche Encendido y accionamiento' },
-  { key: 'guarda',              label: 'Revisión Guarda' },
-  { key: 'tuerca_contratuerca', label: 'Revisión Tuerca, Contratuerca' },
-  { key: 'limpieza',            label: 'Revisión Limpieza' },
-  { key: 'mango',               label: 'Revisión Mango' }
+    { key: 'tornilleria', label: 'Revisión de Tornillería' },
+    { key: 'bateria', label: 'Estado de la batería' },
+    { key: 'carcaza', label: 'Revisión Carcaza' },
+    { key: 'swiche', label: 'Revisión Swiche Encendido y accionamiento' },
+    { key: 'guarda', label: 'Revisión Guarda' },
+    { key: 'tuerca_contratuerca', label: 'Revisión Tuerca, Contratuerca' },
+    { key: 'limpieza', label: 'Revisión Limpieza' },
+    { key: 'mango', label: 'Revisión Mango' }
 ]
 
 // --- Generar los ítems en el HTML ---
@@ -107,8 +107,7 @@ document.getElementById('preopForm').addEventListener('submit', async (e) => {
     const camposObligatorios = [
         { campo: 'obra', nombre: 'Obra' },
         { campo: 'ubicacion', nombre: 'Ubicación' },
-        { campo: 'fecha_desde', nombre: 'Fecha desde' },
-        { campo: 'fecha_hasta', nombre: 'Fecha hasta' }
+        { campo: 'fecha', nombre: 'Fecha' }
     ]
 
     for (const { campo, nombre } of camposObligatorios) {
@@ -120,12 +119,7 @@ document.getElementById('preopForm').addEventListener('submit', async (e) => {
         }
     }
 
-    // Validar fechas
-    if (form.fecha_hasta.value < form.fecha_desde.value) {
-        showModal('Fechas inválidas', '"Fecha hasta" no puede ser anterior a "Fecha desde".', 'error')
-        form.fecha_hasta.focus()
-        return
-    }
+
 
     // ===== 2. VALIDACIÓN DE CÉDULA =====
     const cedula = form.cedula.value.trim()
@@ -166,8 +160,7 @@ document.getElementById('preopForm').addEventListener('submit', async (e) => {
     const data = {
         obra: form.obra.value.trim(),
         ubicacion: form.ubicacion.value.trim(),
-        fecha_desde: form.fecha_desde.value,
-        fecha_hasta: form.fecha_hasta.value,
+        fecha: form.fecha.value,
         cedula: cedula,
         observaciones: form.observaciones.value.trim() || null,
         firma: firma
@@ -226,7 +219,17 @@ document.getElementById('preopForm').addEventListener('submit', async (e) => {
     // ===== 9. GENERAR PDF Y ENVIAR A DRIVE =====
     try {
         data.created_at = new Date().toLocaleString('es-CO')
-        const doc = await generarPDFPreoperacional(data, ITEMS, data.foto_url || null)
+            // Convertir la foto local a Base64 para que el PDF no dependa de internet
+    let fotoParaPDF = null
+    if (fotoSeleccionada) {
+      fotoParaPDF = await new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.onload = (e) => resolve(e.target.result)
+        reader.readAsDataURL(fotoSeleccionada)
+      })
+    }
+
+    const doc = await generarPDFPreoperacional(data, ITEMS, fotoParaPDF)
         const nombre = nombreArchivoPDF(data)
 
 
@@ -294,7 +297,7 @@ document.getElementById('preopForm').addEventListener('submit', async (e) => {
     fotoSeleccionada = null
     photoInput.value = ''
     photoPreview.classList.add('hidden')
-    photoBtn.textContent = '📷 Tomar / Elegir Foto'
+    photoBtn.textContent = 'Tomar / Elegir Foto'
 
     showModal('¡Registro enviado!', 'Tu preoperacional fue guardado correctamente y enviado a SST.')
 

@@ -7,7 +7,7 @@ async function cargarImagenComoBase64(src) {
     img.crossOrigin = 'anonymous'
     img.onload = () => {
       const canvas = document.createElement('canvas')
-      canvas.width  = img.naturalWidth
+      canvas.width = img.naturalWidth
       canvas.height = img.naturalHeight
       const ctx = canvas.getContext('2d')
       ctx.drawImage(img, 0, 0)
@@ -22,14 +22,14 @@ async function cargarImagenComoBase64(src) {
 export async function generarPDFPreoperacional(datos, items, fotoUrl) {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   const anchoPag = 210
-  const margen   = 15
+  const margen = 15
   const alturaPag = 297
   let y = 15
 
   const verdeOscuro = [46, 125, 50]
-  const verdeClaro  = [95, 175, 60]
-  const gris        = [120, 120, 120]
-  const negro       = [30, 30, 30]
+  const verdeClaro = [95, 175, 60]
+  const gris = [120, 120, 120]
+  const negro = [30, 30, 30]
 
   // ===== 1. HEADER con logo =====
   try {
@@ -47,9 +47,9 @@ export async function generarPDFPreoperacional(datos, items, fotoUrl) {
   doc.setFontSize(8)
   doc.setTextColor(...gris)
   doc.setFont('helvetica', 'normal')
-  doc.text('CÓDIGO: SG-SST-F-99', anchoPag - margen, y + 6,  { align: 'right' })
-  doc.text('VERSIÓN: 1',          anchoPag - margen, y + 11, { align: 'right' })
-  doc.text('FECHA: 04/07/2023',   anchoPag - margen, y + 16, { align: 'right' })
+  doc.text('CÓDIGO: SG-SST-F-99', anchoPag - margen, y + 6, { align: 'right' })
+  doc.text('VERSIÓN: 1', anchoPag - margen, y + 11, { align: 'right' })
+  doc.text('FECHA: 04/07/2023', anchoPag - margen, y + 16, { align: 'right' })
 
   y += 38
   doc.setDrawColor(...verdeClaro)
@@ -71,10 +71,9 @@ export async function generarPDFPreoperacional(datos, items, fotoUrl) {
   const colIzq = margen
   const colDer = anchoPag / 2 + 5
 
-  doc.text(`Obra: ${datos.obra}`,               colIzq, y)
-  doc.text(`Fecha desde: ${datos.fecha_desde}`, colDer, y); y += 6
-  doc.text(`Ubicación: ${datos.ubicacion}`,     colIzq, y)
-  doc.text(`Fecha hasta: ${datos.fecha_hasta}`, colDer, y); y += 6
+  doc.text(`Obra: ${datos.obra}`, colIzq, y)
+  doc.text(`Fecha: ${datos.fecha}`, colDer, y); y += 6
+  doc.text(`Ubicación: ${datos.ubicacion}`, colIzq, y); y += 6
   doc.text(`Registrado: ${datos.created_at || new Date().toLocaleString('es-CO')}`, colIzq, y)
   y += 10
 
@@ -95,8 +94,8 @@ export async function generarPDFPreoperacional(datos, items, fotoUrl) {
     let etiqueta = valor
     let color = negro
 
-    if (valor === 'B')   { etiqueta = 'B (Bueno)';       color = [46, 125, 50];  totalB++ }
-    if (valor === 'M')   { etiqueta = 'M (Malo)';        color = [200, 40, 40];  totalM++ }
+    if (valor === 'B') { etiqueta = 'B (Bueno)'; color = [46, 125, 50]; totalB++ }
+    if (valor === 'M') { etiqueta = 'M (Malo)'; color = [200, 40, 40]; totalM++ }
     if (valor === 'N/A') { etiqueta = 'N/A (No aplica)'; color = [120, 120, 120]; totalNA++ }
 
     doc.setFont('helvetica', 'bold')
@@ -209,7 +208,7 @@ export async function generarPDFPreoperacional(datos, items, fotoUrl) {
 
       const fotoBase64 = await cargarImagenComoBase64(fotoUrl)
       const fotoAnchoMax = 100
-      const fotoAltoMax  = 90
+      const fotoAltoMax = 90
 
       const img = new Image()
       img.src = fotoBase64
@@ -217,11 +216,11 @@ export async function generarPDFPreoperacional(datos, items, fotoUrl) {
       const ratio = img.naturalHeight / img.naturalWidth
 
       let fotoAncho = fotoAnchoMax
-      let fotoAlto  = fotoAncho * ratio
+      let fotoAlto = fotoAncho * ratio
 
       // Si la altura excede el máximo, reajustar manteniendo proporción
       if (fotoAlto > fotoAltoMax) {
-        fotoAlto  = fotoAltoMax
+        fotoAlto = fotoAltoMax
         fotoAncho = fotoAlto / ratio
       }
 
